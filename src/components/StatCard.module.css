@@ -1,0 +1,72 @@
+.card {
+  background-color: #1D2228;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid #2a3139;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: #F58B1F;
+  box-shadow: 0 4px 12px rgba(245, 139, 31, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8a92a0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.icon {
+  font-size: 20px;
+  color: #F58B1F;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.trendArrow {
+  font-size: 12px;
+}
+
+.trend-up {
+  color: #22c55e;
+}
+
+.trend-down {
+  color: #ef4444;
+}
+
+.trendValue {
+  font-weight: 600;
+}
