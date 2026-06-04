@@ -1,0 +1,108 @@
+.exportBar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.btnExport {
+  background: #F58B1F;
+  color: #0F1113;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.btnExport:hover {
+  background: #d97a15;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.chartContainer {
+  background: #1D2228;
+  border: 1px solid #2D3640;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.chartContainer h3 {
+  color: #F4F7FA;
+  margin-bottom: 16px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.usersSection {
+  background: #1D2228;
+  border: 1px solid #2D3640;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.usersSection h3 {
+  color: #F4F7FA;
+  margin-bottom: 16px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.btnDetail {
+  background: #F58B1F;
+  color: #0F1113;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.btnDetail:hover {
+  background: #d97a15;
+}
+
+.userDetail {
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.userDetail p {
+  color: #F4F7FA;
+  margin: 0;
+  font-size: 14px;
+}
+
+.userDetail strong {
+  color: #F58B1F;
+}
+
+@media (max-width: 1200px) {
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .exportBar {
+    flex-direction: column;
+  }
+
+  .btnExport {
+    width: 100%;
+  }
+
+  .chartContainer {
+    padding: 16px;
+  }
+}

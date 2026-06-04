@@ -108,3 +108,112 @@ export const addRouteStat = (stat) => {
     console.error('Error adding route stat:', error);
   }
 };
+
+export const initializeData = () => {
+  if (getRoutes().length === 0) {
+    const mockRoutes = [
+      {
+        id: 'route-1',
+        name: 'Easy Start',
+        grade: 'V0',
+        gradeValue: 0,
+        wallType: 'Vertical',
+        location: 'Wall A',
+        description: 'Perfect warm-up route',
+        betaSteps: ['Use feet first', 'Move hips in', 'Reach to the top'],
+        date: new Date().toISOString().split('T')[0],
+        status: 'active',
+      },
+      {
+        id: 'route-2',
+        name: 'Crimpy Challenge',
+        grade: 'V2',
+        gradeValue: 2,
+        wallType: 'Slab',
+        location: 'Wall B',
+        description: 'Requires good grip strength',
+        betaSteps: ['Crimp the jugs', 'Lock arms', 'Dyno to the top'],
+        date: new Date().toISOString().split('T')[0],
+        status: 'active',
+      },
+      {
+        id: 'route-3',
+        name: 'The Overhang',
+        grade: 'V4',
+        gradeValue: 4,
+        wallType: 'Overhang',
+        location: 'Wall C',
+        description: 'Strength endurance test',
+        betaSteps: ['Work your way up the overhang', 'Use body tension', 'Power finish'],
+        date: new Date().toISOString().split('T')[0],
+        status: 'active',
+      },
+      {
+        id: 'route-4',
+        name: 'Cave Master',
+        grade: 'V6',
+        gradeValue: 6,
+        wallType: 'Cave',
+        location: 'Wall D',
+        description: 'Expert level - requires technique and strength',
+        betaSteps: ['Use dynamic movements', 'Precision placements', 'Full body engagement'],
+        date: new Date().toISOString().split('T')[0],
+        status: 'active',
+      },
+    ];
+    setRoutes(mockRoutes);
+  }
+
+  if (getUsers().length === 0) {
+    const mockUsers = [
+      { id: 'user-1', name: 'Alice', level: 'Beginner', avatarColor: '#FF6B6B', sessionsCount: 12, climbedRoutes: [] },
+      { id: 'user-2', name: 'Bob', level: 'Intermediate', avatarColor: '#4ECDC4', sessionsCount: 25, climbedRoutes: [] },
+      { id: 'user-3', name: 'Charlie', level: 'Advanced', avatarColor: '#45B7D1', sessionsCount: 48, climbedRoutes: [] },
+      { id: 'user-4', name: 'Diana', level: 'Expert', avatarColor: '#FFA07A', sessionsCount: 72, climbedRoutes: [] },
+    ];
+    setUsers(mockUsers);
+  }
+
+  if (getRouteStats().length === 0) {
+    const mockStats = [
+      { userId: 'user-1', routeId: 'route-1', attempts: 2, topped: true, date: new Date(Date.now() - 86400000).toISOString() },
+      { userId: 'user-1', routeId: 'route-2', attempts: 5, topped: false, date: new Date(Date.now() - 172800000).toISOString() },
+      { userId: 'user-2', routeId: 'route-1', attempts: 1, topped: true, date: new Date(Date.now() - 259200000).toISOString() },
+      { userId: 'user-2', routeId: 'route-3', attempts: 8, topped: true, date: new Date(Date.now() - 345600000).toISOString() },
+      { userId: 'user-3', routeId: 'route-3', attempts: 4, topped: true, date: new Date(Date.now() - 432000000).toISOString() },
+      { userId: 'user-3', routeId: 'route-4', attempts: 12, topped: false, date: new Date(Date.now() - 518400000).toISOString() },
+      { userId: 'user-4', routeId: 'route-4', attempts: 3, topped: true, date: new Date(Date.now() - 604800000).toISOString() },
+    ];
+    const stats = getRouteStats();
+    if (stats.length === 0) {
+      localStorage.setItem(STORAGE_KEYS.ROUTE_STATS, JSON.stringify(mockStats));
+    }
+  }
+
+  if (!getHallInfo()) {
+    const mockHallInfo = {
+      name: 'Boulder Heights Climbing Hall',
+      address: { street: 'Klettererstraße 42', zip: '10115', city: 'Berlin' },
+      contact: { phone: '+49 30 12345678', email: 'info@boulderheights.de', website: 'www.boulderheights.de' },
+      description: 'Modern bouldering hall with over 100 routes, perfect for all skill levels.',
+      hours: [
+        { day: 'Montag', from: '09:00', to: '22:00' },
+        { day: 'Dienstag', from: '09:00', to: '22:00' },
+        { day: 'Mittwoch', from: '09:00', to: '22:00' },
+        { day: 'Donnerstag', from: '09:00', to: '22:00' },
+        { day: 'Freitag', from: '09:00', to: '23:00' },
+        { day: 'Samstag', from: '10:00', to: '23:00' },
+        { day: 'Sonntag', from: '10:00', to: '21:00' },
+      ],
+      prices: [
+        { category: 'Erwachsene (Tageskarte)', price: '15' },
+        { category: 'Studenten/Rentner', price: '12' },
+        { category: '10er-Karte', price: '120' },
+      ],
+      news: [
+        { date: new Date().toISOString().split('T')[0], text: 'Neue Anfängerrouten eingesetzt!' },
+      ],
+    };
+    setHallInfo(mockHallInfo);
+  }
+};

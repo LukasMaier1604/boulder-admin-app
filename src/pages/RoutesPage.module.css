@@ -1,0 +1,268 @@
+.filterBar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.searchInput,
+.select {
+  padding: 10px 12px;
+  background: #1D2228;
+  color: #F4F7FA;
+  border: 1px solid #2D3640;
+  border-radius: 6px;
+  font-size: 14px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.searchInput::placeholder {
+  color: #99A4AF;
+}
+
+.searchInput:focus,
+.select:focus {
+  outline: none;
+  border-color: #F58B1F;
+  background: #252B33;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  border: 1px solid #2D3640;
+  border-radius: 8px;
+  background: #1D2228;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: #0F1113;
+  padding: 12px;
+  text-align: left;
+  color: #F4F7FA;
+  font-weight: 600;
+  font-size: 13px;
+  border-bottom: 2px solid #2D3640;
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortable:hover {
+  background: #1D2228;
+  color: #F58B1F;
+}
+
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #2D3640;
+  color: #F4F7FA;
+}
+
+.table tbody tr:hover {
+  background: #252B33;
+}
+
+.actionsCell {
+  display: flex;
+  gap: 8px;
+}
+
+.btnSmall {
+  padding: 6px 12px;
+  background: #F58B1F;
+  color: #0F1113;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btnSmall:hover {
+  background: #d97a15;
+}
+
+.btnDanger {
+  background: #ef4444;
+  color: white;
+}
+
+.btnDanger:hover {
+  background: #dc2626;
+}
+
+.empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: #99A4AF;
+}
+
+.linkBtn {
+  background: none;
+  border: none;
+  color: #F58B1F;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.linkBtn:hover {
+  color: #d97a15;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.label {
+  color: #F4F7FA;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.betaSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #0F1113;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #2D3640;
+}
+
+.betaStepRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.betaStepInput {
+  flex: 1;
+  padding: 8px;
+  background: #1D2228;
+  color: #F4F7FA;
+  border: 1px solid #2D3640;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.betaStepInput:focus {
+  outline: none;
+  border-color: #F58B1F;
+}
+
+.btnRemove {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btnRemove:hover {
+  background: #dc2626;
+}
+
+.btnAdd {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  align-self: flex-start;
+}
+
+.btnAdd:hover {
+  background: #16a34a;
+}
+
+.statusToggle {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.statusToggle select {
+  flex: 1;
+  padding: 10px;
+  background: #1D2228;
+  color: #F4F7FA;
+  border: 1px solid #2D3640;
+  border-radius: 6px;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.btnSave {
+  background: #F58B1F;
+  color: #0F1113;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btnSave:hover {
+  background: #d97a15;
+}
+
+.btnCancel {
+  background: #2D3640;
+  color: #F4F7FA;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btnCancel:hover {
+  background: #3a4450;
+}
+
+@media (max-width: 768px) {
+  .filterBar {
+    flex-direction: column;
+  }
+
+  .searchInput,
+  .select {
+    min-width: 100%;
+  }
+
+  .actionsCell {
+    flex-direction: column;
+  }
+
+  .table {
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px;
+  }
+}

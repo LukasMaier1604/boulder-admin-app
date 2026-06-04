@@ -1,7 +1,5 @@
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
   height: 100vh;
   width: 260px;
   background-color: #0F1113;
@@ -114,6 +112,9 @@
 
 @media (max-width: 768px) {
   .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     transform: translateX(-100%);
   }
@@ -127,6 +128,7 @@
     position: fixed;
     top: 16px;
     left: 16px;
+    z-index: 101;
   }
 
   .overlay {

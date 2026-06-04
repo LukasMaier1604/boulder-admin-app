@@ -1,0 +1,141 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 900px;
+}
+
+.section {
+  background: #1D2228;
+  border: 1px solid #2D3640;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #F4F7FA;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #F58B1F;
+  padding-bottom: 12px;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+.row > * {
+  flex: 1;
+}
+
+.select,
+.input,
+.textarea {
+  padding: 10px 12px;
+  background: #0F1113;
+  color: #F4F7FA;
+  border: 1px solid #2D3640;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #F58B1F;
+  background: #252B33;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.btnAdd {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.btnAdd:hover {
+  background: #16a34a;
+}
+
+.btnRemove {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btnRemove:hover {
+  background: #dc2626;
+}
+
+.newsItem {
+  background: #0F1113;
+  border: 1px solid #2D3640;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.newsItem .input {
+  min-width: 120px;
+  margin-top: 0;
+}
+
+.newsItem .textarea {
+  flex: 1;
+}
+
+.newsItem .btnRemove {
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    gap: 24px;
+  }
+
+  .section {
+    padding: 16px;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .row > * {
+    flex: 1;
+  }
+
+  .newsItem {
+    flex-direction: column;
+  }
+
+  .newsItem .btnRemove {
+    align-self: flex-end;
+  }
+}
