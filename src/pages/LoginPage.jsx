@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../hooks/useToast';
+import { useApi } from '../hooks/useApi';
 import { setSession } from '../services/storage';
 import styles from './LoginPage.module.css';
 
@@ -10,25 +11,28 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { addToast } = useToast();
+  const { authLogin } = useApi();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    if (email === 'admin' && password === 'boulder2024') {
+    try {
+      const response = await authLogin(email, password);
       const session = {
-        username: 'admin',
-        email: 'admin@boulderadmin.local',
+        username: response.user?.name || email,
+        email: response.user?.email || email,
         loginTime: new Date().toISOString(),
+        token: response.token,
       };
       setSession(session);
-      addToast('Login successful', 'success');
+      addToast('Login erfolgreich', 'success');
       navigate('/dashboard');
-    } else {
-      addToast('Invalid credentials. Try admin / boulder2024', 'error');
+    } catch (error) {
+      addToast(error.message || 'Login fehlgeschlagen', 'error');
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (

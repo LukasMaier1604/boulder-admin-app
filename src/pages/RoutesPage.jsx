@@ -5,7 +5,7 @@ import DataTable from '../components/DataTable';
 import Modal from '../components/Modal';
 import FormField from '../components/FormField';
 import Badge from '../components/Badge';
-import { getRoutes, setRoutes, getRouteStats, addRouteStat, initializeData } from '../services/storage';
+import { useApi } from '../hooks/useApi';
 import { useToast } from '../hooks/useToast';
 import styles from './RoutesPage.module.css';
 
@@ -19,18 +19,29 @@ const RoutesPage = () => {
   const [filterDifficulty, setFilterDifficulty] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
   const [formData, setFormData] = useState({});
-  const { showToast } = useToast();
+  const [loading, setLoading] = useState(true);
+  const { addToast } = useToast();
+  const { getRoutes, createRoute, updateRoute, deleteRoute, archiveRoute, executeApiCall } = useApi();
 
-  const WALL_TYPES = ['Slab', 'Vertical', 'Overhang', 'Competition', 'Cave'];
+  const WALL_TYPES = ['SLAB', 'VERTICAL', 'OVERHANG', 'COMPETITION', 'CAVE'];
   const GRADES = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V10+'];
   const GRADE_VALUES = { V0: 0, V1: 1, V2: 2, V3: 3, V4: 4, V5: 5, V6: 6, V7: 7, V8: 8, V9: 9, V10: 10, 'V10+': 11 };
 
   useEffect(() => {
-    initializeData();
-    const routesData = getRoutes();
-    setRoutesState(routesData);
-    filterAndSort(routesData);
+    loadRoutes();
   }, []);
+
+  const loadRoutes = async () => {
+    setLoading(true);
+    try {
+      const data = await executeApiCall(getRoutes);
+      setRoutesState(data.routes || []);
+    } catch (error) {
+      addToast('Routen konnten nicht geladen werden', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filterAndSort = (routesData = routes) => {
     let filtered = routesData.filter(r => r.status !== 'archived');
@@ -100,42 +111,60 @@ const RoutesPage = () => {
     handleFormChange('betaSteps', newSteps);
   };
 
-  const handleSaveRoute = () => {
+  const handleSaveRoute = async () => {
     if (!formData.name || !formData.grade) {
-      showToast('Name und Grad sind Pflichtfelder', 'error');
+      addToast('Name und Grad sind Pflichtfelder', 'error');
       return;
     }
 
-    let updatedRoutes;
-    if (editingRoute) {
-      updatedRoutes = routes.map(r => r.id === editingRoute.id ? { ...formData, id: editingRoute.id } : r);
-      showToast('Route aktualisiert', 'success');
-    } else {
-      updatedRoutes = [...routes, { ...formData, id: Date.now().toString() }];
-      showToast('Route erstellt', 'success');
+    try {
+      const gradeValue = GRADE_VALUES[formData.grade] || 0;
+      const routeData = {
+        name: formData.name,
+        grade: formData.grade,
+        gradeValue,
+        wallType: formData.wallType || 'VERTICAL',
+        location: formData.location || '',
+        description: formData.description || '',
+      };
+
+      if (editingRoute) {
+        await executeApiCall(updateRoute, editingRoute.id, routeData);
+        addToast('Route aktualisiert', 'success');
+      } else {
+        await executeApiCall(createRoute, routeData);
+        addToast('Route erstellt', 'success');
+      }
+
+      setShowModal(false);
+      setFormData({});
+      await loadRoutes();
+    } catch (error) {
+      addToast(error.message || 'Fehler beim Speichern', 'error');
     }
-
-    setRoutes(updatedRoutes);
-    setRoutesState(updatedRoutes);
-    setShowModal(false);
-    setFormData({});
   };
 
-  const handleArchiveRoute = (route) => {
-    const updatedRoutes = routes.map(r =>
-      r.id === route.id ? { ...r, status: 'archived' } : r
-    );
-    setRoutes(updatedRoutes);
-    setRoutesState(updatedRoutes);
-    showToast('Route archiviert', 'success');
+  const handleArchiveRoute = async (route) => {
+    if (window.confirm(`Route "${route.name}" archivieren?`)) {
+      try {
+        await executeApiCall(archiveRoute, route.id);
+        addToast('Route archiviert', 'success');
+        await loadRoutes();
+      } catch (error) {
+        addToast('Fehler beim Archivieren', 'error');
+      }
+    }
   };
 
-  const handleDeleteRoute = (route) => {
+  const handleDeleteRoute = async (route) => {
     if (window.confirm(`Route "${route.name}" wirklich löschen?`)) {
-      const updatedRoutes = routes.filter(r => r.id !== route.id);
-      setRoutes(updatedRoutes);
-      setRoutesState(updatedRoutes);
-      showToast('Route gelöscht', 'success');
+      try {
+        await executeApiCall(deleteRoute, route.id);
+        addToast('Route gelöscht', 'success');
+        await loadRoutes();
+      } catch (error) {
+        addToast('Fehler beim Löschen', 'error');
+      }
     }
   };
 
@@ -184,7 +213,9 @@ const RoutesPage = () => {
         </select>
       </div>
 
-      {filteredRoutes.length > 0 ? (
+      {loading ? (
+        <div className={styles.empty}><p>Laden...</p></div>
+      ) : filteredRoutes.length > 0 ? (
         <div className={styles.tableContainer}>
           <table className={styles.table}>
             <thead>
