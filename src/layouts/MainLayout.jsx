@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import SidebarNav from '../components/SidebarNav';
 import { getHallInfo } from '../services/storage';
 import { clearSession } from '../services/storage';
@@ -7,19 +6,28 @@ import styles from './MainLayout.module.css';
 
 const MainLayout = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const hallInfo = getHallInfo();
   const hallName = hallInfo?.name || 'Main Hall';
-  const [activeMenu, setActiveMenu] = useState('dashboard');
+
+  // activeMenu wird aus der URL abgeleitet, nicht aus isoliertem State
+  const routeToMenu = {
+    '/dashboard': 'dashboard',
+    '/routen': 'routen',
+    '/hallen-info': 'hallen',
+    '/auswertung': 'auswertung',
+  };
+  const activeMenu = routeToMenu[location.pathname] || 'dashboard';
+
+  const menuToRoute = {
+    dashboard: '/dashboard',
+    routen: '/routen',
+    hallen: '/hallen-info',
+    auswertung: '/auswertung',
+  };
 
   const handleMenuChange = (menuId) => {
-    setActiveMenu(menuId);
-    const routes = {
-      dashboard: '/dashboard',
-      routen: '/routen',
-      hallen: '/hallen-info',
-      auswertung: '/auswertung',
-    };
-    navigate(routes[menuId] || '/dashboard');
+    navigate(menuToRoute[menuId] || '/dashboard');
   };
 
   const handleLogout = () => {
