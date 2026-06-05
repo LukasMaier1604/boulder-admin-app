@@ -1,9 +1,12 @@
-import { useEffect } from 'react';
-import { useToast } from '../hooks/useToast';
+import { useEffect, useState } from 'react';
+// import { useToast } from '../hooks/useToast';
 import styles from './Toast.module.css';
 
 const Toast = ({ message, type, duration = 3000, onRemove }) => {
+  const [isVisible, setIsVisible] = useState(true);
+
   useEffect(() => {
+    if (duration > 0) {
     if (duration > 0) {
       const timer = setTimeout(onRemove, duration);
       return () => clearTimeout(timer);

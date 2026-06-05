@@ -23,8 +23,51 @@ const RoutesPage = () => {
   const { addToast } = useToast();
   const { getRoutes, createRoute, updateRoute, deleteRoute, archiveRoute, executeApiCall } = useApi();
 
-  const WALL_TYPES = ['SLAB', 'VERTICAL', 'OVERHANG', 'COMPETITION', 'CAVE'];
-  const GRADES = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V10+'];
+  const WALL_TYPES = [
+    { label: 'SLAB', value: 'SLAB' },
+    { label: 'VERTICAL', value: 'VERTICAL' },
+    { label: 'OVERHANG', value: 'OVERHANG' },
+    { label: 'COMPETITION', value: 'COMPETITION' },
+    { label: 'CAVE', value: 'CAVE' }
+  ];
+  const GRADES = [
+    { label: 'V0',
+      value: 'V0'
+     },
+    { label: 'V1',
+      value: 'V1'
+     },
+    { label: 'V2',
+      value: 'V2'
+     },
+    { label: 'V3',
+      value: 'V3'
+     },
+    { label: 'V4',
+      value: 'V4'
+     },
+    { label: 'V5',
+      value: 'V5'
+     },
+    { label: 'V6',
+      value: 'V6'
+     },
+    { label: 'V7',
+      value: 'V7'
+     },
+    { label: 'V8',
+      value: 'V8'
+     },
+    { label: 'V9',
+      value: 'V9'
+     },
+    { label: 'V10',
+      value: 'V10'
+     },
+    { label: 'V10+',
+      value: 'V10+'
+     }
+  ];
   const GRADE_VALUES = { V0: 0, V1: 1, V2: 2, V3: 3, V4: 4, V5: 5, V6: 6, V7: 7, V8: 8, V9: 9, V10: 10, 'V10+': 11 };
 
   useEffect(() => {
@@ -203,7 +246,7 @@ const RoutesPage = () => {
         />
         <select value={filterWallType} onChange={(e) => setFilterWallType(e.target.value)} className={styles.select}>
           <option value="">Alle Wandtypen</option>
-          {WALL_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+          {WALL_TYPES.map(t => <option key={t.label} value={t.value}>{t.label}</option>)}
         </select>
         <select value={filterDifficulty} onChange={(e) => setFilterDifficulty(e.target.value)} className={styles.select}>
           <option value="">Alle Schwierigkeiten</option>
